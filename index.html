@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Genre Classifier</title>
+    <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎵 Music Genre Classifier</h1>
+            <p>Upload an audio file to predict its genre</p>
+        </header>
+
+        <main>
+            <div class="upload-section">
+                <div class="upload-box" id="dropZone">
+                    <input type="file" id="fileInput" accept="audio/*" hidden>
+                    <div class="upload-content">
+                        <img src="assets/upload-icon.svg" alt="Upload" class="upload-icon">
+                        <p>Drag and drop your music file here</p>
+                        <p>or</p>
+                        <button class="upload-btn" onclick="document.getElementById('fileInput').click()">
+                            Choose File
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Advanced mode for manual feature input -->
+            <details class="advanced-section">
+                <summary>Advanced: Manual Feature Input</summary>
+                <div class="manual-input">
+                    <textarea id="featuresInput" placeholder="Enter 57 features separated by commas"></textarea>
+                    <button id="predictBtn" class="upload-btn">Predict from Features</button>
+                </div>
+            </details>
+
+            <div class="result-section" id="resultSection">
+                <h2>Classification Result</h2>
+                <div class="result-content">
+                    <div class="genre-display">
+                        <span class="genre-label">Predicted Genre:</span>
+                        <span class="genre-value" id="predictedGenre">🎶 Waiting for input...</span>
+                    </div>
+                    <div class="confidence-meter">
+                        <div class="confidence-bar" id="confidenceBar"></div>
+                        <span class="confidence-value" id="confidenceValue">0%</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Powered by Machine Learning</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
