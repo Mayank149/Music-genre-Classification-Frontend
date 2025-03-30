@@ -4,58 +4,100 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Music Genre Classifier</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS - Animate On Scroll Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Custom styles -->
     <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
+    <div class="background-waves"></div>
     <div class="container">
-        <header>
-            <h1>🎵 Music Genre Classifier</h1>
+        <header data-aos="fade-down" data-aos-delay="100">
+            <div class="logo-area">
+                <i class="fa-solid fa-music music-icon"></i>
+                <h1>Music Genre Classifier</h1>
+            </div>
             <p>Upload an audio file to predict its genre</p>
         </header>
 
         <main>
-            <div class="upload-section">
+            <div class="upload-section" data-aos="zoom-in" data-aos-delay="200">
                 <div class="upload-box" id="dropZone">
                     <input type="file" id="fileInput" accept="audio/*" hidden>
                     <div class="upload-content">
-                        <img src="assets/upload-icon.svg" alt="Upload" class="upload-icon">
+                        <div class="upload-icon-container">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                        </div>
                         <p>Drag and drop your music file here</p>
-                        <p>or</p>
+                        <p class="divider">or</p>
                         <button class="upload-btn" onclick="document.getElementById('fileInput').click()">
-                            Choose File
+                            <i class="fa-solid fa-file-audio"></i> Choose File
                         </button>
                     </div>
                 </div>
             </div>
 
             <!-- Advanced mode for manual feature input -->
-            <details class="advanced-section">
-                <summary>Advanced: Manual Feature Input</summary>
+            <details class="advanced-section" data-aos="fade-up" data-aos-delay="300">
+                <summary>
+                    <i class="fa-solid fa-sliders"></i> Advanced: Manual Feature Input
+                </summary>
                 <div class="manual-input">
                     <textarea id="featuresInput" placeholder="Enter 57 features separated by commas"></textarea>
-                    <button id="predictBtn" class="upload-btn">Predict from Features</button>
+                    <button id="predictBtn" class="upload-btn">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Predict from Features
+                    </button>
                 </div>
             </details>
 
-            <div class="result-section" id="resultSection">
-                <h2>Classification Result</h2>
+            <div class="result-section" id="resultSection" data-aos="fade-up" data-aos-delay="400">
+                <h2><i class="fa-solid fa-chart-simple"></i> Classification Result</h2>
                 <div class="result-content">
-                    <div class="genre-display">
-                        <span class="genre-label">Predicted Genre:</span>
-                        <span class="genre-value" id="predictedGenre">🎶 Waiting for input...</span>
-                    </div>
-                    <div class="confidence-meter">
-                        <div class="confidence-bar" id="confidenceBar"></div>
-                        <span class="confidence-value" id="confidenceValue">0%</span>
+                    <div class="genre-card">
+                        <div class="file-info">
+                            <div class="file-name-container">
+                                <span class="file-label">File:</span>
+                                <span class="file-name" id="musicFileName">No file selected</span>
+                            </div>
+                        </div>
+                        <div class="genre-display">
+                            <span class="genre-label">Predicted Genre:</span>
+                            <span class="genre-value" id="predictedGenre">🎶 Waiting for input...</span>
+                        </div>
+                        <div class="confidence-container">
+                            <div class="confidence-label">Confidence:</div>
+                            <div class="confidence-meter">
+                                <div class="confidence-bar" id="confidenceBar"></div>
+                                <span class="confidence-value" id="confidenceValue">0%</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </main>
 
-        <footer>
+        <footer data-aos="fade-up" data-aos-delay="500">
             <p>Powered by Machine Learning</p>
+            <p class="signature">Made with <i class="fa-solid fa-heart pulse"></i> by <span>Mayank Bansal</span></p>
         </footer>
     </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 800,
+                once: true
+            });
+        });
+    </script>
     <script src="script.js"></script>
 </body>
 </html>
