@@ -55,46 +55,26 @@ async function handleFile(file) {
         const formData = new FormData();
         formData.append('file', file);
 
-        // Extract features from the audio file
-        // This requires a backend endpoint that can analyze the audio and extract features
-        const featuresResponse = await fetch("https://music-genre-classification-6zrx.onrender.com/extract-features", {
+        // Send audio file directly to prediction API
+        // The backend handles feature extraction and prediction
+        const response = await fetch("http://127.0.0.1:5000/predict", {
             method: "POST",
             body: formData
         });
 
-        if (!featuresResponse.ok) {
-            throw new Error('Failed to extract features from audio');
-        }
-
-        const featuresData = await featuresResponse.json();
-        const features = featuresData.features;
-
-        // Validate features
-        if (!features || features.length !== 57) {
-            throw new Error(`Invalid features: expected 57, got ${features ? features.length : 0}`);
-        }
-
-        // Send features to prediction API
-        const predictionResponse = await fetch("https://music-genre-classification-6zrx.onrender.com/predict", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ features: features })
-        });
-
-        if (!predictionResponse.ok) {
+        if (!response.ok) {
             throw new Error('Failed to predict genre');
         }
 
-        const data = await predictionResponse.json();
+        const data = await response.json();
         
-        // Update UI with results
-        predictedGenre.innerHTML = `🎶 ${data.genre}`;
+        // Update UI with results - use predicted_genre from backend
+        predictedGenre.innerHTML = `🎶 ${data.predicted_genre}`;
         
-        // Update confidence if available
-        if (data.confidence && confidenceBar && confidenceValue) {
-            const confidence = Math.round(data.confidence * 100);
-            confidenceBar.style.width = `${confidence}%`;
-            confidenceValue.textContent = `${confidence}%`;
+        // Set default confidence since backend doesn't provide it
+        if (confidenceBar && confidenceValue) {
+            confidenceBar.style.width = '100%';
+            confidenceValue.textContent = 'N/A';
         }
 
     } catch (error) {
@@ -120,15 +100,15 @@ if (predictBtn) {
         }
 
         try {
-            // Sending request to the deployed Flask API
-            const response = await fetch("https://music-genre-classification-6zrx.onrender.com/predict", {
+            // Sending request to the local Flask API
+            const response = await fetch("http://127.0.0.1:5000/predict-features", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ features: featuresArray })
             });
 
             const data = await response.json();
-            predictedGenre.innerHTML = `🎶 ${data.genre}`;
+            predictedGenre.innerHTML = `🎶 ${data.predicted_genre || "Unknown"}`;
         } catch (error) {
             console.error("Error:", error);
             predictedGenre.innerHTML = "❌ Error predicting genre.";
